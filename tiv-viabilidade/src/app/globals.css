@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+/*
+  Paleta "dossiê de incorporação":
+  — grafite:  fundo base, tom de prancheta de projeto
+  — papel:    superfície das seções, tom de papel técnico
+  — tinta:    texto sobre papel
+  — anil:     azul de projeto (destaque estrutural / informativo)
+  — ferrugem: laranja de obra (ação, atenção)
+  — verde-obra / vermelho-alerta: veredito de viabilidade
+*/
+:root {
+  --grafite-950: #0e1216;
+  --grafite-900: #14191f;
+  --grafite-800: #1b222a;
+  --grafite-700: #262f3a;
+  --grafite-600: #3a4552;
+  --grafite-400: #6b7684;
+  --grafite-300: #96a0ac;
+
+  --papel-100: #f7f3ea;
+  --papel-50: #fbf9f4;
+
+  --tinta-900: #1f2621;
+  --tinta-600: #4a534c;
+
+  --anil-700: #2c4a6e;
+  --anil-500: #3d6690;
+  --anil-100: #dce6ef;
+
+  --ferrugem-600: #c1592b;
+  --ferrugem-500: #d9702f;
+  --ferrugem-100: #f4e2d3;
+
+  --verde-obra-700: #2f6248;
+  --verde-obra-500: #3e8760;
+  --verde-obra-100: #dcece2;
+
+  --vermelho-alerta-700: #9c2f26;
+  --vermelho-alerta-500: #b23a2e;
+  --vermelho-alerta-100: #f3dcd9;
+}
+
+@theme inline {
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-data);
+
+  --color-grafite-950: var(--grafite-950);
+  --color-grafite-900: var(--grafite-900);
+  --color-grafite-800: var(--grafite-800);
+  --color-grafite-700: var(--grafite-700);
+  --color-grafite-600: var(--grafite-600);
+  --color-grafite-400: var(--grafite-400);
+  --color-grafite-300: var(--grafite-300);
+
+  --color-papel-100: var(--papel-100);
+  --color-papel-50: var(--papel-50);
+
+  --color-tinta-900: var(--tinta-900);
+  --color-tinta-600: var(--tinta-600);
+
+  --color-anil-700: var(--anil-700);
+  --color-anil-500: var(--anil-500);
+  --color-anil-100: var(--anil-100);
+
+  --color-ferrugem-600: var(--ferrugem-600);
+  --color-ferrugem-500: var(--ferrugem-500);
+  --color-ferrugem-100: var(--ferrugem-100);
+
+  --color-verde-obra-700: var(--verde-obra-700);
+  --color-verde-obra-500: var(--verde-obra-500);
+  --color-verde-obra-100: var(--verde-obra-100);
+
+  --color-vermelho-alerta-700: var(--vermelho-alerta-700);
+  --color-vermelho-alerta-500: var(--vermelho-alerta-500);
+  --color-vermelho-alerta-100: var(--vermelho-alerta-100);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 90% -10%, rgba(61, 102, 144, 0.16), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(217, 112, 47, 0.08), transparent 55%),
+    var(--grafite-950);
+  color: var(--papel-100);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--ferrugem-500);
+  color: var(--grafite-950);
+}
+
+/* Blueprint grid texture used behind the hero / header */
+.blueprint-grid {
+  background-image: linear-gradient(rgba(150, 160, 172, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150, 160, 172, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Data inputs: numbers align right, tabular, mono */
+.data-field {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
