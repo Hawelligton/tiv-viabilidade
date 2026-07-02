@@ -5,6 +5,7 @@ import type { EstudoState } from "@/lib/types";
 import { calcular } from "@/lib/calc";
 import { calcularMatrizRisco } from "@/lib/riskMatrix";
 import { calcularFluxoMensal } from "@/lib/schedule";
+import { calcularIndicadores } from "@/lib/indicators";
 import { criarEstudoExemplo, estudoVazio } from "@/lib/defaults";
 import { formatCurrency, formatPercent } from "@/lib/format";
 import { Section } from "@/components/Section";
@@ -36,6 +37,7 @@ export default function Home() {
         const migrado: EstudoState = {
           ...base,
           ...salvo,
+          parametros: { ...base.parametros, ...(salvo.parametros ?? {}) },
           cronograma: salvo.cronograma ?? base.cronograma,
           custoOperacional: (salvo.custoOperacional ?? []).map(
             (i: { categoria?: string } & Record<string, unknown>) => ({
@@ -70,6 +72,10 @@ export default function Home() {
   const fluxo = useMemo(
     () => calcularFluxoMensal(state, resultado),
     [state, resultado]
+  );
+  const indicadores = useMemo(
+    () => calcularIndicadores(fluxo, state.parametros.tmaAnualPct),
+    [fluxo, state.parametros.tmaAnualPct]
   );
 
   return (
@@ -195,6 +201,7 @@ export default function Home() {
           <CronogramaPanel
             cronograma={state.cronograma}
             fluxo={fluxo}
+            indicadores={indicadores}
             onChange={(cronograma) => setState((s) => ({ ...s, cronograma }))}
           />
         </Section>
@@ -253,4 +260,4 @@ function StatCard({
       </dd>
     </div>
   );
-}
+              }
