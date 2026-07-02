@@ -181,6 +181,14 @@ export function criarEstudoExemplo(): EstudoState {
       { id: id("co"), nome: "Propagandas", valor: 2500, categoria: "Comercialização e marketing" },
       { id: id("co"), nome: "Elevador", valor: 150000, categoria: "Instalações e equipamentos" },
     ],
+    cronograma: {
+      prazoTotalMeses: 36,
+      pagamentoTerrenoMes: 0,
+      construcao: { modelo: "curvaS", mesInicio: 6, duracao: 24 },
+      custoOperacional: { modelo: "linear", mesInicio: 0, duracao: 30 },
+      vendas: { modelo: "linear", mesInicio: 3, duracao: 27 },
+      pctRepasse: 0.3,
+    },
   };
 }
 
@@ -218,5 +226,13 @@ export function estudoVazio(): EstudoState {
     },
     unidades: [novaUnidade()],
     custoOperacional: [],
+    cronograma: {
+      prazoTotalMeses: 36,
+      pagamentoTerrenoMes: 0,
+      construcao: { modelo: "curvaS", mesInicio: 6, duracao: 24 },
+      custoOperacional: { modelo: "linear", mesInicio: 0, duracao: 30 },
+      vendas: { modelo: "linear", mesInicio: 3, duracao: 27 },
+      pctRepasse: 0.3,
+    },
   };
 }
