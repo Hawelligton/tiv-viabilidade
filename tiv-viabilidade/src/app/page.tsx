@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { EstudoState } from "@/lib/types";
 import { calcular } from "@/lib/calc";
 import { calcularMatrizRisco } from "@/lib/riskMatrix";
+import { calcularFluxoMensal } from "@/lib/schedule";
 import { criarEstudoExemplo, estudoVazio } from "@/lib/defaults";
 import { formatCurrency, formatPercent } from "@/lib/format";
 import { Section } from "@/components/Section";
@@ -14,6 +15,7 @@ import { CustoOperacionalPanel } from "@/components/CustoOperacionalPanel";
 import { ResultadoPanel } from "@/components/ResultadoPanel";
 import { AvaliacaoPanel } from "@/components/AvaliacaoPanel";
 import { RiskMatrixPanel } from "@/components/RiskMatrixPanel";
+import { CronogramaPanel } from "@/components/CronogramaPanel";
 
 const STORAGE_KEY = "tiv.estudo.v1";
 
@@ -26,8 +28,25 @@ export default function Home() {
     // externo do navegador e só pode ocorrer após a montagem (hidratação).
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (raw) setState(JSON.parse(raw));
+      if (raw) {
+        const salvo = JSON.parse(raw);
+        // Migração: estados salvos por versões anteriores podem não ter
+        // cronograma nem categorias de custo — completa com padrões.
+        const base = criarEstudoExemplo();
+        const migrado: EstudoState = {
+          ...base,
+          ...salvo,
+          cronograma: salvo.cronograma ?? base.cronograma,
+          custoOperacional: (salvo.custoOperacional ?? []).map(
+            (i: { categoria?: string } & Record<string, unknown>) => ({
+              categoria: "Outros",
+              ...i,
+            })
+          ),
+        };
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setState(migrado);
+      }
     } catch {
       // localStorage indisponível ou dado corrompido — segue com o exemplo padrão
     }
@@ -46,6 +65,10 @@ export default function Home() {
   const resultado = useMemo(() => calcular(state), [state]);
   const matrizRisco = useMemo(
     () => calcularMatrizRisco(state, resultado),
+    [state, resultado]
+  );
+  const fluxo = useMemo(
+    () => calcularFluxoMensal(state, resultado),
     [state, resultado]
   );
 
@@ -164,12 +187,24 @@ export default function Home() {
           />
         </Section>
 
-        <Section numero="05" titulo="Resultado">
+        <Section
+          numero="05"
+          titulo="Cronograma físico-financeiro"
+          descricao="Curvas de desembolso e recebimento ao longo do empreendimento — modelo linear ou curva S de engenharia, como nas premissas do TIV 4.0. O fluxo representa o empreendimento completo: receitas líquidas de sub-rogação e obra como desembolso."
+        >
+          <CronogramaPanel
+            cronograma={state.cronograma}
+            fluxo={fluxo}
+            onChange={(cronograma) => setState((s) => ({ ...s, cronograma }))}
+          />
+        </Section>
+
+        <Section numero="06" titulo="Resultado">
           <ResultadoPanel r={resultado} />
         </Section>
 
         <Section
-          numero="06"
+          numero="07"
           titulo="Avaliação final"
           descricao="Resultado obtido comparado às metas mínimas do incorporador e do construtor."
         >
@@ -177,7 +212,7 @@ export default function Home() {
         </Section>
 
         <Section
-          numero="07"
+          numero="08"
           titulo="Matriz de risco"
           descricao="Estudo estático de 10 indicadores técnicos e financeiros, com faixas de ameaça/oportunidade e pesos — metodologia TIV 4.0."
         >
