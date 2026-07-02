@@ -58,6 +58,9 @@ export interface Parametros {
   vmvPct: number; // 0-1, "Verba de Mercado e Vendas" sobre a receita total
   metaIncorporadorPct: number; // 0-1
   metaConstrutorPct: number; // 0-1
+  /** TMA — Taxa Mínima de Atratividade, anual (0-1). Taxa de desconto do VPL
+   *  e referência de comparação da TIR. */
+  tmaAnualPct: number;
 }
 
 /** Modelos de curva de distribuição mensal, como nas abas de premissas do TIV
