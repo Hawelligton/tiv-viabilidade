@@ -60,10 +60,38 @@ export interface Parametros {
   metaConstrutorPct: number; // 0-1
 }
 
+/** Modelos de curva de distribuição mensal, como nas abas de premissas do TIV
+ *  (ex.: "MODELO DE CURVA: LINEAR" em CP 01.4; curva S de engenharia em CP 02). */
+export type ModeloCurva = "linear" | "curvaS";
+
+export interface CurvaConfig {
+  modelo: ModeloCurva;
+  /** Mês de início (0 = primeiro mês do empreendimento) */
+  mesInicio: number;
+  /** Duração da curva em meses */
+  duracao: number;
+}
+
+export interface Cronograma {
+  /** Horizonte total do empreendimento em meses */
+  prazoTotalMeses: number;
+  /** Mês de pagamento do terreno (usado quando não há sub-rogação) */
+  pagamentoTerrenoMes: number;
+  /** Curva de desembolso do custo de construção */
+  construcao: CurvaConfig;
+  /** Curva de desembolso do custo operacional */
+  custoOperacional: CurvaConfig;
+  /** Curva de recebimento das vendas (parte recebida durante o período de vendas) */
+  vendas: CurvaConfig;
+  /** Percentual da receita recebida apenas no repasse/entrega (fim da obra), 0-1 */
+  pctRepasse: number;
+}
+
 export interface EstudoState {
   nomeProjeto: string;
   terreno: Terreno;
   parametros: Parametros;
   unidades: UnidadeTipo[];
   custoOperacional: CustoOperacionalItem[];
+  cronograma: Cronograma;
 }
