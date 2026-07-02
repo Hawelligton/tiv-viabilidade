@@ -1,4 +1,4 @@
-import type { EstudoState } from "./types";
+ import type { EstudoState } from "./types";
 
 let counter = 0;
 const id = (prefix: string) => `${prefix}-${++counter}-${Date.now().toString(36)}`;
@@ -18,6 +18,7 @@ export function criarEstudoExemplo(): EstudoState {
       vmvPct: 0.014,
       metaIncorporadorPct: 0.15,
       metaConstrutorPct: 0.1,
+      tmaAnualPct: 0.12,
     },
     unidades: [
       {
@@ -223,6 +224,7 @@ export function estudoVazio(): EstudoState {
       vmvPct: 0.014,
       metaIncorporadorPct: 0.15,
       metaConstrutorPct: 0.1,
+      tmaAnualPct: 0.12,
     },
     unidades: [novaUnidade()],
     custoOperacional: [],
