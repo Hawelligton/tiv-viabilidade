@@ -2,8 +2,9 @@
 
 import type { Cronograma, CurvaConfig, ModeloCurva } from "@/lib/types";
 import type { FluxoMensal } from "@/lib/schedule";
+import type { IndicadoresDinamicos } from "@/lib/indicators";
 import { NumberField, PercentField } from "./Fields";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, formatPercent } from "@/lib/format";
 
 function CurvaEditor({
   titulo,
@@ -147,10 +148,12 @@ function GraficoFluxo({ fluxo }: { fluxo: FluxoMensal }) {
 export function CronogramaPanel({
   cronograma,
   fluxo,
+  indicadores,
   onChange,
 }: {
   cronograma: Cronograma;
   fluxo: FluxoMensal;
+  indicadores: IndicadoresDinamicos;
   onChange: (c: Cronograma) => void;
 }) {
   return (
@@ -253,6 +256,78 @@ export function CronogramaPanel({
           </p>
         </div>
       </div>
+
+      <div>
+        <p className="mb-3 text-[11px] uppercase tracking-[0.09em] text-grafite-300">
+          Indicadores dinâmicos
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-xl border border-grafite-700 bg-grafite-900/50 px-4 py-3">
+            <p className="text-[10.5px] uppercase tracking-[0.08em] text-grafite-300">
+              TIR
+            </p>
+            <p
+              className={`data-field mt-1 text-lg font-semibold ${
+                indicadores.tirAnual === null
+                  ? "text-grafite-400"
+                  : indicadores.tirAnual >= 0
+                    ? "text-verde-obra-500"
+                    : "text-vermelho-alerta-500"
+              }`}
+            >
+              {indicadores.tirAnual === null
+                ? "—"
+                : `${formatPercent(indicadores.tirAnual)} a.a.`}
+            </p>
+            <p className="text-[11px] text-grafite-400">
+              MTIR{" "}
+              {indicadores.mtirAnual === null
+                ? "—"
+                : `${formatPercent(indicadores.mtirAnual)} a.a.`}
+            </p>
+          </div>
+          <div className="rounded-xl border border-grafite-700 bg-grafite-900/50 px-4 py-3">
+            <p className="text-[10.5px] uppercase tracking-[0.08em] text-grafite-300">
+              VPL à TMA
+            </p>
+            <p
+              className={`data-field mt-1 text-lg font-semibold ${
+                indicadores.vpl >= 0
+                  ? "text-verde-obra-500"
+                  : "text-vermelho-alerta-500"
+              }`}
+            >
+              {formatCurrency(indicadores.vpl)}
+            </p>
+            <p className="text-[11px] text-grafite-400">
+              TMA {formatPercent(indicadores.tmaMensal, 2)} a.m.
+            </p>
+          </div>
+          <div className="rounded-xl border border-grafite-700 bg-grafite-900/50 px-4 py-3">
+            <p className="text-[10.5px] uppercase tracking-[0.08em] text-grafite-300">
+              Payback simples
+            </p>
+            <p className="data-field mt-1 text-lg font-semibold text-papel-50">
+              {indicadores.paybackMeses === null
+                ? "não zera"
+                : `mês ${indicadores.paybackMeses}`}
+            </p>
+          </div>
+          <div className="rounded-xl border border-grafite-700 bg-grafite-900/50 px-4 py-3">
+            <p className="text-[10.5px] uppercase tracking-[0.08em] text-grafite-300">
+              Payback descontado
+            </p>
+            <p className="data-field mt-1 text-lg font-semibold text-papel-50">
+              {indicadores.paybackDescontadoMeses === null
+                ? "não zera"
+                : `mês ${indicadores.paybackDescontadoMeses}`}
+            </p>
+            <p className="text-[11px] text-grafite-400">
+              exposição VP {formatCurrency(indicadores.exposicaoMaximaVP)}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
-}
+      }
