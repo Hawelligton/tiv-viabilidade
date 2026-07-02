@@ -24,10 +24,23 @@ export interface UnidadeTipo {
   qtdSubRogada: number;
 }
 
+export const CATEGORIAS_CUSTO = [
+  "Terreno — custos complementares",
+  "Projetos e aprovações",
+  "Jurídico e documentação",
+  "Administração da incorporação",
+  "Comercialização e marketing",
+  "Instalações e equipamentos",
+  "Outros",
+] as const;
+
+export type CategoriaCusto = (typeof CATEGORIAS_CUSTO)[number];
+
 export interface CustoOperacionalItem {
   id: string;
   nome: string;
   valor: number;
+  categoria: CategoriaCusto;
 }
 
 export interface Terreno {
