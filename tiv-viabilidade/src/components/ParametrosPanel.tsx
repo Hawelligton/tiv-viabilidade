@@ -59,8 +59,15 @@ export function ParametrosPanel({
             value={parametros.metaConstrutorPct}
             onChange={(v) => set("metaConstrutorPct", v)}
           />
+          <PercentField
+            label="TMA (anual)"
+            value={parametros.tmaAnualPct}
+            onChange={(v) => set("tmaAnualPct", v)}
+            hint="Taxa mínima de atratividade — desconta o VPL e referencia a TIR"
+            className="col-span-2"
+          />
         </div>
       </div>
     </div>
   );
-}
+    }
