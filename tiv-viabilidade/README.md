@@ -95,3 +95,4 @@ src/
 ## Aviso
 
 Ferramenta de apoio à decisão. Os resultados não substituem o estudo definitivo de viabilidade nem orientação profissional especializada (engenharia, contabilidade e direito imobiliário).
+trigger deploy
