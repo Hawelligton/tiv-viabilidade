@@ -165,18 +165,21 @@ export function criarEstudoExemplo(): EstudoState {
       },
     ],
     custoOperacional: [
-      { id: id("co"), nome: "Advogados", valor: 20000 },
-      { id: id("co"), nome: "Despachantes", valor: 8000 },
-      { id: id("co"), nome: "NBR 12.721", valor: 20000 },
-      { id: id("co"), nome: "Registro de incorporação", valor: 60000 },
-      { id: id("co"), nome: "Plantas humanizadas", valor: 65000 },
-      { id: id("co"), nome: "Perspectivas", valor: 60000 },
-      { id: id("co"), nome: "Fundação", valor: 200000 },
-      { id: id("co"), nome: "Folders", valor: 2500 },
-      { id: id("co"), nome: "Calculista de NB", valor: 1500 },
-      { id: id("co"), nome: "Placa de venda", valor: 2500 },
-      { id: id("co"), nome: "Propagandas", valor: 2500 },
-      { id: id("co"), nome: "Elevador", valor: 150000 },
+      { id: id("co"), nome: "IPTU (obra)", valor: 5400, categoria: "Terreno — custos complementares" },
+      { id: id("co"), nome: "ITBI + Habite-se", valor: 35660.53, categoria: "Jurídico e documentação" },
+      { id: id("co"), nome: "Advogados", valor: 20000, categoria: "Jurídico e documentação" },
+      { id: id("co"), nome: "Despachantes", valor: 8000, categoria: "Jurídico e documentação" },
+      { id: id("co"), nome: "Registro de incorporação", valor: 60000, categoria: "Jurídico e documentação" },
+      { id: id("co"), nome: "NBR 12.721", valor: 20000, categoria: "Projetos e aprovações" },
+      { id: id("co"), nome: "Plantas humanizadas", valor: 65000, categoria: "Projetos e aprovações" },
+      { id: id("co"), nome: "Perspectivas", valor: 60000, categoria: "Projetos e aprovações" },
+      { id: id("co"), nome: "Calculista de NB", valor: 1500, categoria: "Projetos e aprovações" },
+      { id: id("co"), nome: "Fundação", valor: 200000, categoria: "Projetos e aprovações" },
+      { id: id("co"), nome: "Gestão de projeto", valor: 356605.25, categoria: "Administração da incorporação" },
+      { id: id("co"), nome: "Folders", valor: 2500, categoria: "Comercialização e marketing" },
+      { id: id("co"), nome: "Placa de venda", valor: 2500, categoria: "Comercialização e marketing" },
+      { id: id("co"), nome: "Propagandas", valor: 2500, categoria: "Comercialização e marketing" },
+      { id: id("co"), nome: "Elevador", valor: 150000, categoria: "Instalações e equipamentos" },
     ],
   };
 }
@@ -198,7 +201,7 @@ export function novaUnidade(): EstudoState["unidades"][number] {
 }
 
 export function novoCustoItem(): EstudoState["custoOperacional"][number] {
-  return { id: id("co"), nome: "Novo item", valor: 0 };
+  return { id: id("co"), nome: "Novo item", valor: 0, categoria: "Outros" };
 }
 
 export function estudoVazio(): EstudoState {
