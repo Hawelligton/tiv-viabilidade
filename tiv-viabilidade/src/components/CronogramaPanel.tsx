@@ -330,4 +330,4 @@ export function CronogramaPanel({
       </div>
     </div>
   );
-      }
+}
